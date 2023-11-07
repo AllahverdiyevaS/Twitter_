@@ -1,20 +1,18 @@
- const postsContainer = document.getElementById("posts");
+const postsContainer = document.getElementById("posts");
 
 async function displayPosts(userId) {
-    
     const res = await fetch(`https://dummyjson.com/users/${userId}`);
     const userData = await res.json();
- 
     return userData;
 }
 
 async function formForAddPost() {
-    const userId = 1; 
+    const userId = 1;
     const { id, image } = await displayPosts(userId);
     const form = document.querySelector('form');
-    const textarea= document.querySelector('textarea');
+    const textarea = document.querySelector('textarea');
     const userImage = document.querySelector('.user_img');
-    
+
     userImage.src = image;
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -22,8 +20,8 @@ async function formForAddPost() {
             body: textarea.value,
             userId: id
         };
-        
-        await addPost(obj);
+
+         showPost(obj);
         textarea.value = "";
     });
 }
@@ -46,20 +44,28 @@ async function addPost(data) {
     return dataPost;
 }
 
+async function showPost(data) {
+    try {
+        const { userId, body } = await addPost(data);
+        const { image, username } = await displayPosts(userId);
+        showDisplayPosts(body, 0, image, username);
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 formForAddPost();
 
 allPosts('https://dummyjson.com/posts', (posts) => getAndShow(posts));
 
 async function getAndShow(posts) {
-    
     for (const post of posts) {
         const { username, image } = await displayPosts(post.userId);
-        showDisplayPosts(post, image, username);
+        showDisplayPosts(post.body, post.reactions, image, username, post.title);
     }
 }
 
-function showDisplayPosts(post, image, username) {
+function showDisplayPosts(body, reactions, image, username, title) {
     const postDiv = document.createElement("div");
     postDiv.classList.add('user-post');
     postDiv.innerHTML = `
@@ -68,18 +74,16 @@ function showDisplayPosts(post, image, username) {
         </div>
         <div class="title">
             <div class="name">
-                <h2>${post.title}</h2>
+                <h2>${title}</h2>
                 <p>${username}</p>
             </div>
             <div class="body">
-                 <p>${post.body}</p>
+                 <p>${body}</p>
                  <div class='reactions'><img src="./img/reactions.svg" alt="">
-                 <p>${post.reactions}</p></div>
+                 <p>${reactions}</p></div>
             </div>
         </div>
         <hr>
     `;
     postsContainer.appendChild(postDiv);
 }
-
-
