@@ -66,7 +66,7 @@ function showDisplayPosts(post, image, username) {
         <div class="user-img">
              <img src="${image}" alt="${username}'s image">
         </div>
-        <div "title">
+        <div class="title">
             <div class="name">
                 <h2>${post.title}</h2>
                 <p>${username}</p>
