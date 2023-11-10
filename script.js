@@ -1,4 +1,9 @@
+
 const postsContainer = document.getElementById("posts");
+ const urlParams=new URLSearchParams(window.location.search)
+ console.log(urlParams);
+ console.log(window.location.search);
+const userId= urlParams.get('userId')
 
 async function displayPosts(userId) {
     const res = await fetch(`https://dummyjson.com/users/${userId}`);
@@ -65,12 +70,12 @@ async function getAndShow(posts) {
     }
 }
 
-function showDisplayPosts(body, reactions, image, username, title) {
+function showDisplayPosts(body, reactions, image, username, title,userId) {
     const postDiv = document.createElement("div");
     postDiv.classList.add('user-post');
     postDiv.innerHTML = `
         <div class="user-img">
-             <img src="${image}" alt="${username}'s image">
+             <img id="img" src="${image}" alt="${username}'s image">
         </div>
         <div class="title">
             <div class="name">
@@ -85,5 +90,9 @@ function showDisplayPosts(body, reactions, image, username, title) {
         </div>
         <hr>
     `;
-    postsContainer.appendChild(postDiv);
+    postsContainer.prepend(postDiv);
+     const userImg=document.querySelector('#img')
+      userImg.addEventListener('click',()=>{
+     window.location.href=`/user.html?userId=${userId}`})
 }
+showDisplayPosts(7)

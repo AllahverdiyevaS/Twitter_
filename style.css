@@ -63,7 +63,9 @@ border: 1px solid #000;
 background: url(<path-to-image>), lightgray 50% / cover no-repeat;}
 .user-post{display: flex;margin-bottom: 14px;
   gap: 12px;
+  
 }
+.user-img img{cursor: pointer;}
 .user-post{display: flex;margin-bottom: 14px;
   gap: 12px;
 }
