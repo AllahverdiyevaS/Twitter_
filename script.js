@@ -1,5 +1,9 @@
 
 const postsContainer = document.getElementById("posts");
+const urlParams = new URLSearchParams(window.location.search);
+console.log(urlParams);
+console.log(urlParams.has('userId'));
+const userId = urlParams.get('userId');
 
 async function displayPosts(userId) {
     const res = await fetch(`https://dummyjson.com/users/${userId}`);
@@ -71,7 +75,7 @@ function showDisplayPosts(body, reactions, image, username, title,userId) {
     postDiv.classList.add('user-post');
     postDiv.innerHTML = `
         <div class="user-img">
-             <img id="img" src="${image}" alt="${username}'s image">
+             <img onclick='' id="img" src="${image}" alt="${username}'s image">
         </div>
         <div class="title">
             <div class="name">

@@ -2,6 +2,8 @@
 const root = document.querySelector('#root');
 const userContainer = document.createElement('div'); 
 const urlParams = new URLSearchParams(window.location.search);
+console.log(urlParams);
+console.log(urlParams.has('userId'));
 const userId = urlParams.get('userId');
 
 
