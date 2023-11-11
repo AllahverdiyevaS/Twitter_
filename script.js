@@ -1,9 +1,5 @@
 
 const postsContainer = document.getElementById("posts");
- const urlParams=new URLSearchParams(window.location.search)
- console.log(urlParams);
- console.log(window.location.search);
-const userId= urlParams.get('userId')
 
 async function displayPosts(userId) {
     const res = await fetch(`https://dummyjson.com/users/${userId}`);
@@ -49,7 +45,7 @@ async function addPost(data) {
     return dataPost;
 }
 
-async function showPost(data) {
+async function showPost(data,) {
     try {
         const { userId, body } = await addPost(data);
         const { image, username } = await displayPosts(userId);
