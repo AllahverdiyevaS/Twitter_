@@ -1,10 +1,12 @@
 
 const root = document.querySelector('#root');
 const userContainer = document.createElement('div'); 
+
 const urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams);
-console.log(urlParams.has('userId'));
-const userId = urlParams.get('userId');
+const clickedUserId = urlParams.get('userId');
+console.log(clickedUserId);
+
 
 
 const getUserDataAndPosts = async (userId) => {
@@ -20,18 +22,18 @@ const getUserDataAndPosts = async (userId) => {
 
         const userData = await responseUser.json();
         const postData = await responsePost.json();
-        console.log(userData,postData);
+        console.log(userData, postData);
         const { firstName, email } = userData;
         const { posts } = postData;
-        showUserAndPosts(firstName, email, posts); 
+        showUserAndPosts(firstName, email, posts);
     } catch (error) {
         console.log(error);
         root.innerHTML = `<h1>${error.message}</h1>`;
     }
+  
 };
 
-getUserDataAndPosts(5); 
-
+getUserDataAndPosts(clickedUserId);
 const showUserAndPosts = (firstName, email, posts) => {
     userContainer.innerHTML = '';
     const user = document.createElement('div');

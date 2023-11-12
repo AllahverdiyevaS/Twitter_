@@ -1,18 +1,16 @@
 
 const postsContainer = document.getElementById("posts");
-const urlParams = new URLSearchParams(window.location.search);
-console.log(urlParams);
-console.log(urlParams.has('userId'));
-const userId = urlParams.get('userId');
+
 
 async function displayPosts(userId) {
     const res = await fetch(`https://dummyjson.com/users/${userId}`);
     const userData = await res.json();
+    console.log(userData);
     return userData;
 }
 
 async function formForAddPost() {
-    const userId = 1;
+    const userId = 7;
     const { id, image } = await displayPosts(userId);
     const form = document.querySelector('form');
     const textarea = document.querySelector('textarea');
@@ -46,6 +44,7 @@ async function addPost(data) {
         body: JSON.stringify(data),
     });
     const dataPost = await response.json();
+   
     return dataPost;
 }
 
@@ -66,7 +65,7 @@ allPosts('https://dummyjson.com/posts', (posts) => getAndShow(posts));
 async function getAndShow(posts) {
     for (const post of posts) {
         const { username, image } = await displayPosts(post.userId);
-        showDisplayPosts(post.body, post.reactions, image, username, post.title);
+        showDisplayPosts(post.body, post.reactions, image, username, post.title,post.userId);
     }
 }
 
@@ -93,6 +92,9 @@ function showDisplayPosts(body, reactions, image, username, title,userId) {
     postsContainer.prepend(postDiv);
      const userImg=document.querySelector('#img')
       userImg.addEventListener('click',()=>{
-     window.location.href=`/user.html?userId=${userId}`})
+     window.location.href=`http://127.0.0.1:5501/Twitter_team/user.html?userId=${userId}`})
 }
+
+
+
 showDisplayPosts(7)
